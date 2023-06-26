@@ -1,0 +1,319 @@
+\ProvidesPackage{hayesmacros}[2019/04/15 macros for personal use]
+\RequirePackage{amsmath, amsfonts, graphicx, ifthen, mathtools, bm}
+
+% feedback macros
+
+\def\boxit#1{\vbox{\hrule\hbox{\vrule\kern6pt\vbox{\kern6pt#1\kern6pt}\kern6pt\vrule}\hrule}}
+\def\keith#1{\vskip 2mm\boxit{\vskip 2mm{\color{red}\bf#1} \bf -- Keith\vskip 2mm}\vskip 2mm}
+\def\alex#1{\vskip 2mm\boxit{\vskip 2mm{\color{cyan}\bf#1} \bf -- Alex \vskip 2mm}\vskip 2mm}
+
+% macros specific to this paper
+
+\newcommand{\Shat}{\widehat{S}}
+\newcommand{\Uhat}{\widehat{U}}
+\newcommand{\Spop}{S}
+\newcommand{\Upop}{U}
+\newcommand{\Vpop}{V}
+
+\newcommand{\Apop}{P}
+
+\newcommand{\Q}{Q}
+\newcommand{\C}{C}
+\newcommand{\X}{X}
+\newcommand{\Xhat}{\widehat{\X}}
+
+\renewcommand{\c}{\bm c}
+\newcommand{\w}{\bm w}
+\newcommand{\Z}{Z}
+\newcommand{\W}{W}
+\newcommand{\Wfull}{L}
+
+\newcommand{\Uw}{U_\parallel}
+\newcommand{\Uwtilde}{U_\perp}
+\newcommand{\Sw}{S_\parallel}
+\newcommand{\Swtilde}{S_\perp}
+\newcommand{\Vw}{V_\parallel}
+\newcommand{\Vwtilde}{V_\perp}
+
+% M-estimation macros
+
+\newcommand{\btheta}{\bm \theta}
+\newcommand{\bthetahat}{\widehat{\bm \theta}}
+\newcommand{\bTheta}{\bm \Theta}
+
+% mediator regression coefficients
+
+\newcommand{\thetazero}{\theta_0}
+\newcommand{\thetat}{\theta_\text{t}}
+\newcommand{\Thetac}{\Theta_\text{c}}
+\newcommand{\Thetaw}{\Theta}
+\newcommand{\Thetaj}{\Theta_{\cdot j}}
+\newcommand{\Thetatc}{\Theta_\text{tc}}
+\newcommand{\Thetatcminus}{\Theta_\text{-tc}}
+
+% mediator regression estimators
+
+\newcommand {\Thetahat} {\widehat \Theta}
+\newcommand {\Thetatilde} {\widetilde \Theta}
+
+\newcommand {\Thetavec} {\vecc \paren*{\Theta}}
+\newcommand {\Thetavechat} {\vecc \paren*{\widehat \Theta}}
+\newcommand {\Thetavectilde} {\vecc \paren*{\widetilde \Theta}}
+\newcommand {\Thetavechatf} [1] {\vecc \paren*{\Thetahatf{#1}}}
+
+\newcommand \thetazerohat {\widehat{\theta}_0}
+\newcommand \thetathat {\widehat{\theta}_\text{t}}
+\newcommand \Thetachat {\widehat{\Theta}_\text{c}}
+\newcommand \Thetajhat {\widehat{\Theta}_{\cdot j}}
+\newcommand \Thetatchat {\widehat{\Theta}_\text{tc}}
+\newcommand \Thetatcminushat {\widehat{\Theta}_\text{-tc}}
+
+\newcommand \thetazerotilde {\widetilde{\theta}_0}
+\newcommand \thetattilde {\widetilde{\theta}_\text{t}}
+\newcommand \Thetactilde {\widetilde{\Theta}_\text{c}}
+\newcommand \Thetajtilde {\widetilde{\Theta}_{\cdot j}}
+\newcommand \Thetatctilde {\widetilde{\Theta}_\text{tc}}
+\newcommand \Thetatcminustilde {\widetilde{\Theta}_\text{-tc}}
+
+\newcommand \thetazerohatf [1] {\widehat{\theta}_0 \paren*{#1}}
+\newcommand \thetathatf [1] {\widehat{\theta}_\text{t} \paren*{#1}}
+\newcommand \Thetachatf [1] {\widehat{\Theta}_\text{c} \paren*{#1}}
+\newcommand \Thetahatf [1] {\widehat{\Theta} \paren*{#1}}
+\newcommand \Thetajhatf [1] {\widehat{\Theta}_{\cdot j} \paren*{#1}}
+\newcommand \Thetatchatf [1] {\widehat{\Theta}_\text{tc} \paren*{#1}}
+
+% outcome regression coefficients
+
+\newcommand{\betazero}{\beta_0}
+\newcommand{\betat}{\beta_\text{t}}
+\newcommand{\betac}{\beta_\text{c}}
+\newcommand{\betaw}{\beta_\text{w}}
+\newcommand{\betax}{\beta_\text{x}}
+\newcommand{\betaz}{\beta_\text{z}}
+
+\newcommand \betahat {\widehat{\beta}}
+\newcommand \betazerohat {\widehat{\beta}_0}
+\newcommand \betathat {\widehat{\beta}_\text{t}}
+\newcommand \betachat {\widehat{\beta}_\text{c}}
+\newcommand \betawhat {\widehat{\beta}_\text{w}}
+\newcommand \betaxhat {\widehat{\beta}_\text{x}}
+
+
+\newcommand \betatilde {\widetilde{\beta}}
+\newcommand \betazerotilde {\widetilde{\beta}_0}
+\newcommand \betattilde {\widetilde{\beta}_\text{t}}
+\newcommand \betactilde {\widetilde{\beta}_\text{c}}
+\newcommand \betawtilde {\widetilde{\beta}_\text{w}}
+\newcommand \betaxtilde {\widetilde{\beta}_\text{x}}
+
+\newcommand \betahatf [1] {\widehat{\beta} \paren*{#1}}
+\newcommand \betazerohatf [1] {\widehat{\beta}_0 \paren*{#1}}
+\newcommand \betathatf [1] {\widehat{\beta}_\text{t} \paren*{#1}}
+\newcommand \betachatf [1] {\widehat{\beta}_\text{c} \paren*{#1}}
+\newcommand \betawhatf [1] {\widehat{\beta}_\text{w} \paren*{#1}}
+\newcommand \betaxhatf [1] {\widehat{\beta}_\text{x} \paren*{#1}}
+
+% coefficient variances
+
+\newcommand{\xihat}{\widehat{\xi}}
+\newcommand{\xitilde}{\widetilde{\xi}}
+
+\newcommand{\varepsilonhat}{\widehat{\varepsilon}}
+\newcommand{\varepsilontilde}{\widetilde{\varepsilon}}
+
+\newcommand{\D}{D}
+\newcommand{\Dhat}{\widehat{D}}
+
+
+\newcommand{\Abeta}{A_\beta}
+\newcommand{\Bbeta}{B_\beta}
+\newcommand{\Atheta}{A_\Theta}
+\newcommand{\Btheta}{B_\Theta}
+\newcommand{\Athetavec}{A_{\Thetavec}}
+\newcommand{\Bthetavec}{B_{\Thetavec}}
+\newcommand{\Bthetaj}{B_{\Theta_j}}
+
+\newcommand{\Qtilde}{\widetilde{Q}}
+\newcommand{\SigmatildethetaQ}{\widetilde \Sigma_{\vecc \paren*{\Theta Q}}}
+\newcommand{\BthetaQtilde}{\widetilde{B}_{\vecc \paren*{\Theta Q}}}
+
+% coefficient variance estimations
+
+\newcommand \Abetahat {\widehat{A}_\beta}
+\newcommand \Bbetahat {\widehat{B}_\beta}
+\newcommand \Athetahat {\widehat{A}_{\Thetavec}}
+\newcommand \Bthetahat {\widehat{B}_{\Thetavec}}
+\newcommand \Bthetajkhat {\widehat{B}_{\Thetavec}^{j,k}}
+
+\newcommand \Abetatilde {\widetilde{A}_\beta}
+\newcommand \Bbetatilde {\widetilde{B}_\beta}
+\newcommand \Athetatilde {\widetilde{A}_{\Thetavec}}
+\newcommand \Bthetatilde {\widetilde{B}_{\Thetavec}}
+\newcommand \Bthetajktilde {\widetilde{B}_{\Thetavec}^{j,k}}
+
+
+\newcommand \Bthetajhat {\widehat{B}_{\Theta_j}}
+
+\newcommand \Abetahatf [1] {\widehat{A}_\beta \paren*{#1}}
+\newcommand \Bbetahatf [1] {\widehat{B}_\beta \paren*{#1}}
+\newcommand \Athetahatf [1] {\widehat{A}_{\Thetavec} \paren*{#1}}
+\newcommand \Bthetahatf [1] {\widehat{B}_{\Thetavec} \paren*{#1}}
+\newcommand \Bthetajhatf [1] {\widehat{B}_{\Theta_j} \paren*{#1}}
+
+\newcommand \Abetalimit {\mathcal{A}_{\beta}}
+
+\newcommand \Sigmabeta {\Sigma_\beta}
+\newcommand \SigmaTheta {\Sigma_\Theta}
+\newcommand \SigmaThetaj {\Sigma_{\Thetaj}}
+\newcommand \Sigmathetavec {\Sigma_{\Thetavec}}
+
+\newcommand \Sigmahatbeta {\widehat{\Sigma}_\beta}
+\newcommand \Sigmahatbetat {\widehat{\Sigma}_{\betat}}
+\newcommand \SigmahatThetaj {\widehat{\Sigma}_{\Thetaj}}
+\newcommand \Sigmahattheta {\widehat{\Sigma}_{\Thetavec}}
+\newcommand \Sigmahatthetavec {\widehat{\Sigma}_{\Thetavec}}
+
+\newcommand \Sigmatildebeta {\widetilde{\Sigma}_\beta}
+\newcommand \Sigmatildebetat {\widetilde{\Sigma}_{\betat}}
+\newcommand \SigmatildeThetaj {\widetilde{\Sigma}_{\Thetaj}}
+\newcommand \Sigmatildetheta {\widetilde{\Sigma}_{\Thetavec}}
+\newcommand \Sigmatildethetavec {\widetilde{\Sigma}_{\Thetavec}}
+
+
+\newcommand \Sigmahatbetaf [1] {\widehat{\Sigma}_\beta \paren*{#1}}
+\newcommand \Sigmahatbetatf [1] {\widehat{\Sigma}_{\betat} \paren*{#1}}
+\newcommand \SigmahatThetajf [1] {\widehat{\Sigma}_{\Thetaj} \paren*{#1}}
+\newcommand \Sigmahatthetaf [1] {\widehat{\Sigma}_{\Thetavec} \paren*{#1}}
+
+\newcommand \sigmande {\sigma^2_\mathrm{nde}}
+\newcommand \sigmanie {\sigma^2_\mathrm{nie}}
+
+\newcommand \sigmahatnde {\widehat{\sigma}^2_\mathrm{nde}}
+\newcommand \sigmahatnie {\widehat{\sigma}^2_\mathrm{nie}}
+
+\newcommand \sigmahatndef [1] {\widehat{\sigma}^2_\mathrm{nde} \paren*{#1}}
+\newcommand \sigmahatnief [1] {\widehat{\sigma}^2_\mathrm{nie} \paren*{#1}}
+
+
+% causal estimands
+
+\newcommand{\ate}{\Psi_\mathrm{ate}}
+\newcommand{\cde}{\Psi_\mathrm{cde}}
+\newcommand{\nde}{\Psi_\mathrm{nde}}
+\newcommand{\nie}{\Psi_\mathrm{nie}}
+
+\newcommand{\atef}{\Psi_\mathrm{ate} \paren*{t, t^*}}
+\newcommand{\cdef}{\Psi_\mathrm{cde} \paren*{t, t^*, x}}
+\newcommand{\ndef}{\Psi_\mathrm{nde} \paren*{t, t^*}}
+\newcommand{\nief}{\Psi_\mathrm{nie} \paren*{t, t^*}}
+
+% causal estimators
+
+\newcommand \cdehat {\widehat{\Psi}_\mathrm{cde}}
+\newcommand \ndehat {\widehat{\Psi}_\mathrm{nde}}
+\newcommand \niehat {\widehat{\Psi}_\mathrm{nie}}
+
+\newcommand \cdetilde {\widetilde{\Psi}_\mathrm{cde}}
+\newcommand \ndetilde {\widetilde{\Psi}_\mathrm{nde}}
+\newcommand \nietilde {\widetilde{\Psi}_\mathrm{nie}}
+
+
+\newcommand \cdehatf [1] {\widehat{\Psi}_\mathrm{cde} \paren*{#1}}
+\newcommand \ndehatf [1] {\widehat{\Psi}_\mathrm{nde} \paren*{#1}}
+\newcommand \niehatf [1] {\widehat{\Psi}_\mathrm{nie} \paren*{#1}}
+
+
+\newcommand \bigoh [1] {\mathcal O \paren*{#1}}
+\newcommand \littleoh [1] {o \paren*{#1}}
+
+\newcommand \Op [1] {\mathcal O_p \paren*{#1}}
+\newcommand \op [1] {o_p \paren*{#1}}
+
+\newcommand{\RDPG}{\operatorname{RDPG}}
+\newcommand{\ASE}{\operatorname{ASE}}
+
+\DeclareMathOperator*{\trace}{trace}
+\DeclareMathOperator*{\rank}{rank}
+\DeclareMathOperator*{\spn}{span}
+
+\newcommand \dP {\; \mathrm{d} P}
+
+\newcommand \ind [1] {\mathbf{1}_{\set{#1}}}
+
+\newcommand \convp {\overset{p}{\to}}
+\newcommand \convd {\overset{d}{\to}}
+\newcommand \convone {\overset{L_1}{\longrightarrow}}
+\newcommand \convtwo {\overset{L_2}{\longrightarrow}}
+\newcommand \convas {\overset{a.s.}{\longrightarrow}}
+
+\newcommand \R {\mathbb{R}}
+\newcommand \bbE {\mathbb{E}}
+
+% CALCULUS SHORTCUTS
+
+\newcommand{\dx}[1][]{%
+   \ifthenelse{ \equal{#1}{} }
+   {\ensuremath{\;\mathrm{d}x}}
+   {\ensuremath{\;\mathrm{d}#1}}
+}
+
+
+\newcommand{\ptl} [1] {\ensuremath{\frac{\partial}{\partial #1}}}
+
+
+% PROBABILITY SHORTCUTS, mostly from STAT 525
+
+% TODO: common distributions, distributional params
+
+\renewcommand{\P}[2][]{%
+   \ifthenelse{ \equal{#1}{} }
+   {\ensuremath{\mathbb{P} \paren*{#2}}}
+   {\ensuremath{\mathbb{P} \paren*{#2 \, \middle \vert \, #1}}}
+}
+
+\newcommand{\E}[2][]{%
+   \ifthenelse{ \equal{#1}{} }
+   {\ensuremath{\mathbb{E} \brac*{#2}}}
+   {\ensuremath{\mathbb{E} \brac*{#2 \, \middle \vert \, #1}}}
+}
+
+\newcommand{\V}[2][]{%
+   \ifthenelse{ \equal{#1}{} }
+   {\ensuremath{\mathbb{V} \brac*{#2}}}
+   {\ensuremath{\mathbb{V} \brac*{#2 \, \middle \vert \, #1}}}
+}
+
+\newcommand{\Ehat}[2][]{%
+   \ifthenelse{ \equal{#1}{} }
+   {\ensuremath{\widehat{\mathbb{E}} \brac*{#2}}}
+   {\ensuremath{\widehat{\mathbb{E}} \brac*{#2 \, \middle \vert \, #1}}}
+}
+
+\newcommand{\Vhat}[2][]{%
+   \ifthenelse{ \equal{#1}{} }
+   {\ensuremath{\widehat{\mathbb{V}} \brac*{#2}}}
+   {\ensuremath{\widehat{\mathbb{V}} \brac*{#2 \, \middle \vert \, #1}}}
+}
+
+\newcommand \Cov [2] {\mathbf{Cov} \paren*{#1, #2}}
+\newcommand \Cor [2] {\mathbf{Cor} \paren*{#1, #2}}
+
+% delimiters
+\DeclarePairedDelimiter{\paren}{(}{)}
+\DeclarePairedDelimiter{\brac}{[}{]}
+\DeclarePairedDelimiter{\set}{\{}{\}}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+
+% probability related, following BDA3 (Gelman) notation mostly
+\newcommand \cond {\mid}
+\newcommand \indep {\perp \!\!\! \perp}
+\newcommand \dist {\sim}
+\newcommand \diid {\stackrel{\mathrm{iid}}{\sim}}
+\newcommand \dind {\stackrel{\mathrm{indep}}{\sim}}
+
+\DeclareMathOperator*{\supp}{supp}
+\DeclareMathOperator*{\vecc}{vec}
+\DeclareMathOperator*{\Bern}{Bernoulli}
+
+\newcommand \Normal [2] {\mathcal N \paren*{#1, #2}}
