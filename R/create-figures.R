@@ -126,7 +126,7 @@ make_homophily_mediating_figure <- function() {
   ggsave(
     path,
     height = 3.5,
-    width = 3.5,
+    width = 3.5 * 16/9,
     dpi = 500
   )
 
@@ -244,7 +244,7 @@ make_homophily_mediating_interference_peer_figure <- function() {
   ggsave(
     path,
     height = 3.5,
-    width = 3.5,
+    width = 3.5 * 16/9,
     dpi = 500
   )
 
@@ -362,7 +362,7 @@ make_homophily_mediating_contagion_peer_figure <- function() {
   ggsave(
     path,
     height = 3.5,
-    width = 3.5,
+    width = 3.5 * 16/9,
     dpi = 500
   )
 

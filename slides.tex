@@ -34,7 +34,6 @@
 
 \maketitle
 
-
 \begin{frame}{Causal mediation}
 
     \begin{columns}
@@ -71,64 +70,78 @@
 
     $Y_i(t)$: counterfactual value of $Y_i$ when $T_i$ is set to $t$. The average treatment effect is
     \begin{align*}
-        \ate = \E{Y_i(t) - Y_i(t^*)} = \nde + \nie,
+        \ate = \E{Y_i(t) - Y_i(t^*)}
     \end{align*}
     which decomposes into the natural direct effect (not operating through $\X_{i \cdot}$) and natural indirect effect (operating through $\X_{i \cdot}$)
     \begin{align*}
+        \ate & = \nde + \nie                                                    \\
         \nde & = \E{Y_i (t, \X_{i \cdot}(t^*)) - Y_i (t^*, \X_{i \cdot} (t^*))} \\
         \nie & = \E{Y_i (t, \X_{i \cdot}(t)) - Y_i (t, \X_{i \cdot} (t^*))}
     \end{align*}
 \end{frame}
 
-\begin{frame}{Effect of sex on smoking in adolescent social networks mediated by friend group!}
+\section{This talk: social networks as mediators}
+
+\begin{frame}{In particular: friends groups in social networks as mediators}
+
+    \textbf{Motivating example:} friend groups mediate the effect of sex on smoking in an adolescent social network
+
+    \begin{itemize}
+        \item Girls smoke than boys
+        \item Girls and boys in different friend groups
+        \item Smoking varies with friend group
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Teenage Friends and Lifestyle Study, Glasgow, 1996}
     \centering
     \includegraphics[width=\textwidth]{figures/glasgow/sex.png}
 \end{frame}
 
-\begin{frame}{Effect of sex on smoking in adolescent social networks mediated by friend group!}
+\begin{frame}{Teenage Friends and Lifestyle Study, Glasgow, 1996}
     \centering
     \includegraphics[width=\textwidth]{figures/glasgow/tobacco.png}
 \end{frame}
 
 \begin{frame}{Mediation on a social network}
 
-    \begin{columns}
+    \begin{figure}[ht]
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/dags/homophily-mediating.png}
+        \label{fig:mediating}
+    \end{figure}
 
-        \column{0.38\textwidth}
+    \scriptsize
 
-        \begin{table}[]
-            \begin{tabular}{lcl}
-                Adjacency matrix & $A$            & $\in \R^{n \times n}$ \\
-                Edge $i \sim j$  & $A_{ij}$       & $\in \R$              \\
-                Treatment        & $T_i$          & $\in \set{0, 1} $     \\
-                Outcome          & $Y_i$          & $\in \R$              \\
-                Confounders      & $\C_{i \cdot}$ & $\in \R^p$            \\
-                Friend group     & $\X_{i \cdot}$ & $\in \R^d$
-            \end{tabular}
-        \end{table}
-
-        \column{0.58\textwidth}
-
-        \begin{figure}[ht]
-            \centering
-            \includegraphics[width=\textwidth]{figures/dags/homophily-mediating.png}
-            \label{fig:mediating}
-        \end{figure}
-    \end{columns}
-
-    A directed acyclic graph (DAG) representing the causal pathways in a network with homophilous mediation, for a network with two nodes called $i$ and $j$.
-
+    \begin{table}[]
+        \begin{tabular}{lcl}
+            Adjacency matrix & $A$            & $\in \R^{n \times n}$ \\
+            Edge $i \sim j$  & $A_{ij}$       & $\in \R$              \\
+            Treatment        & $T_i$          & $\in \set{0, 1}$      \\
+            Outcome          & $Y_i$          & $\in \R$              \\
+            Confounders      & $\C_{i \cdot}$ & $\in \R^{1 \times p}$ \\
+            Friend group     & $\X_{i \cdot}$ & $\in \R^{1 \times d}$
+        \end{tabular}
+    \end{table}
 \end{frame}
 
 \begin{frame}{The challenge: the friend groups $\X_{i \cdot}$ are not observed!}
 
-    Solution: estimate friend groups $\X_{i \cdot}$ using community models for networks!
+    Solution: estimate friend groups $\X_{i \cdot}$ using community models!
+
+    We use a semi-parametric estimator that accommodates:
+
+    \begin{itemize}
+        \item Stochastic blockmodels
+        \item Degree-corrected stochastic blockmodels
+        \item Mixed-membership stochastic blockmodels
+        \item Overlapping stochastic blockmodels
+        \item Random dot product graphs
+        \item Etc
+    \end{itemize}
 
 \end{frame}
-
-
-
-\section{Semi-parametric network \& network regression models}
 
 \begin{frame}{Intuition: stochastic blockmodels}
 
@@ -168,56 +181,50 @@
     \centering
 
     \begin{figure}
-        \includegraphics[scale=0.65]{figures/dags/homophily-mediating.png}
-        \label{fig:homophily-mediating-again}
+        \includegraphics[scale=0.7]{figures/dags/homophily-mediating.png}
     \end{figure}
 
 \end{frame}
 
-\begin{frame}{A regression model for friend group membership}
+\begin{frame}{Mediation estimators require $\X$, which is unknown}
 
-    \centering
+    We will estimate $X$ and plug our estimate into standard estimators!
 
-    \begin{figure}
-        \includegraphics[scale=0.35]{figures/dags/homophily-mediating.png}
-        \label{fig:homophily-mediating-again}
-    \end{figure}
-    Idea: interventions $T_i$ can cause community membership $\X_{i \cdot}$
-    \begin{align*}
-        \underbrace{\E[T_i, \C_{i \cdot}]{\X_{i \cdot}}}_{\R^{1 \times d}}
-         & = \underbrace{\thetazero}_{\R^{1 \times d}}
-        + \underbrace{T_i}_{\{0, 1\}} \underbrace{\thetat}_{\R^{1 \times d}}
-        + \underbrace{\C_{i \cdot}}_{\R^{1 \times p}} \underbrace{\Thetac}_{\R^{p \times d}}
-        + \underbrace{T_i}_{\{0, 1\}} \underbrace{\C_{i \cdot}}_{\R^{1 \times p}} \underbrace{\Thetatc}_{\R^{p \times d}}.
-    \end{align*}
-    Ex: I like frisbee so I joined an ultimate frisbee team (MUFA)
+    \begin{definition}[ASE]
 
-\end{frame}
+        Given a network $A$, the $\widehat{d}$-dimensional \emph{adjacency spectral embedding} of $A$ is
 
-\begin{frame}{A regression model for outcomes}
+        \begin{align*}
+            \Xhat = \Uhat \Shat^{1/2}
+        \end{align*}
 
-    \centering
+        \noindent where $\Uhat \Shat \Uhat^T$ is the rank-$\widehat{d}$ truncated singular value decomposition of $A$.
 
-    \begin{figure}
-        \includegraphics[scale=0.35]{figures/dags/homophily-mediating.png}
-        \label{fig:homophily-mediating-again}
-    \end{figure}
+    \end{definition}
 
-    Idea: community membership $\X_{i \cdot}$ can cause outcomes $Y_i$
-    \begin{align*}
-        \underbrace{\E[T_i, \C_{i \cdot}, \X_{i \cdot}]{Y_i}}_{\R}
-         & = \underbrace{\betazero}_{\R}
-        + \underbrace{T_i}_{\{0, 1\}} \underbrace{\betat}_{\R}
-        + \underbrace{\C_{i \cdot}}_{\R^{1 \times p}} \underbrace{\betac}_{\R^{p}}
-        + \underbrace{\X_{i \cdot}}_{\R^{1 \times d}} \underbrace{\betax}_{\R^d}
-    \end{align*}
-    Ex: I'm on a frisbee team, and the frisbee team goes to the Great Dane together after each game
+    \textbf{Note that the analyst must specify $\widehat{d}$}
 
 \end{frame}
 
-\begin{frame}{Semi-parametric causal identification}
+% \begin{frame}{Uniform consistency of the adjacency spectral embedding}
 
-    Recall the regression models:
+%     Well-known that $\Xhat$ is a good estimate of $\X$
+
+%     \begin{lemma}
+
+%         Under a suitably well-behaved network model, if $\widehat{d}$ is correctly specified or consistently estimated, there is some $d \times d$ orthogonal matrix $Q$ such that
+%         \begin{equation*}
+%             \max_{i \in [n]} \, \norm*{\Xhat_{i \cdot} - \X_{i \cdot} Q} = \op{1}.
+%         \end{equation*}
+
+%     \end{lemma}
+
+% \end{frame}
+
+
+\begin{frame}{Semi-parametric regression estimators}
+
+    Under the assumption that:
     \begin{equation*}
         \begin{aligned}
             \underbrace{\E[T_i, \C_{i \cdot}, \X_{i \cdot}]{Y_i}}_{\R}
@@ -240,43 +247,42 @@
 
 \end{frame}
 
-\section{Estimation}
+\begin{frame}{A regression model for friend group membership}
 
-\begin{frame}{Regression estimators}
+    \centering
 
-    \textbf{Challenge}: regression models depend on $\X$, but we never see $\X$. Luckily we can estimate it!
-
-    \begin{definition}[ASE]
-
-        Given a network $A$, the $\widehat{d}$-dimensional \emph{adjacency spectral embedding} of $A$ is
-
-        \begin{align*}
-            \Xhat = \Uhat \Shat^{1/2}
-        \end{align*}
-
-        \noindent where $\Uhat \Shat \Uhat^T$ is the rank-$\widehat{d}$ truncated singular value decomposition of $A$.
-
-    \end{definition}
-
-    \textbf{Note that the analyst must specify $\widehat{d}$}
+    \begin{figure}
+        \includegraphics[scale=0.5]{figures/dags/homophily-mediating.png}
+    \end{figure}
+    Idea: interventions $T_i$ can cause community membership $\X_{i \cdot}$
+    \begin{align*}
+        \underbrace{\E[T_i, \C_{i \cdot}]{\X_{i \cdot}}}_{\R^{1 \times d}}
+         & = \underbrace{\thetazero}_{\R^{1 \times d}}
+        + \underbrace{T_i}_{\{0, 1\}} \underbrace{\thetat}_{\R^{1 \times d}}
+        + \underbrace{\C_{i \cdot}}_{\R^{1 \times p}} \underbrace{\Thetac}_{\R^{p \times d}}
+        + \underbrace{T_i}_{\{0, 1\}} \underbrace{\C_{i \cdot}}_{\R^{1 \times p}} \underbrace{\Thetatc}_{\R^{p \times d}}.
+    \end{align*}
 
 \end{frame}
 
-\begin{frame}{Uniform consistency of the adjacency spectral embedding}
+\begin{frame}{A regression model for outcomes}
 
-    Well-known that $\Xhat$ is a good estimate of $\X$
+    \centering
 
-    \begin{lemma}
+    \begin{figure}
+        \includegraphics[scale=0.5]{figures/dags/homophily-mediating.png}
+    \end{figure}
 
-        Under a suitably well-behaved network model, if $\widehat{d}$ is correctly specified or consistently estimated, there is some $d \times d$ orthogonal matrix $Q$ such that
-        \begin{equation*}
-            \max_{i \in [n]} \, \norm*{\Xhat_{i \cdot} - \X_{i \cdot} Q} = \op{1}.
-        \end{equation*}
-
-    \end{lemma}
+    Idea: community membership $\X_{i \cdot}$ can cause outcomes $Y_i$
+    \begin{align*}
+        \underbrace{\E[T_i, \C_{i \cdot}, \X_{i \cdot}]{Y_i}}_{\R}
+         & = \underbrace{\betazero}_{\R}
+        + \underbrace{T_i}_{\{0, 1\}} \underbrace{\betat}_{\R}
+        + \underbrace{\C_{i \cdot}}_{\R^{1 \times p}} \underbrace{\betac}_{\R^{p}}
+        + \underbrace{\X_{i \cdot}}_{\R^{1 \times d}} \underbrace{\betax}_{\R^d}
+    \end{align*}
 
 \end{frame}
-
 
 \begin{frame}{$\Xhat$ can be plugged in for $\X$ just fine}
 
@@ -316,7 +322,7 @@
 
         \vspace{2mm}
 
-        Under some mild assumptions, there is some unknown matrix $Q$ such that
+        Under some mild assumptions, there is an unknown orthogonal matrix $Q$ such that
         \begin{equation*}
             \begin{aligned}
                 \sqrt{ n } \,
@@ -390,29 +396,25 @@
 
 \appendix
 
-\begin{frame}{Disambiguation: contagion is not allowed}
+\begin{frame}{Disambiguation: contagion ($Y_j \to Y_i$) is not allowed}
 
     \centering
 
     \begin{figure}
-        \includegraphics[scale=0.65]{figures/dags/homophily-mediating-contagion-peer.png}
+        \includegraphics[scale=0.7]{figures/dags/homophily-mediating-contagion-peer.png}
         \label{fig:contagion}
     \end{figure}
 
-    Contagion ($Y_j \to Y_i$) is not allowed
-
 \end{frame}
 
-\begin{frame}{Disambiguation: interference is not allowed}
+\begin{frame}{Disambiguation: interference ($T_j \to Y_i$) is not allowed}
 
     \centering
 
     \begin{figure}
-        \includegraphics[scale=0.65]{figures/dags/homophily-mediating-interference-peer.png}
+        \includegraphics[scale=0.7]{figures/dags/homophily-mediating-interference-peer.png}
         \label{fig:interference}
     \end{figure}
-
-    Interference ($T_j \to Y_i$) is not allowed
 
 \end{frame}
 
