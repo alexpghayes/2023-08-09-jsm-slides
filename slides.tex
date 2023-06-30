@@ -4,7 +4,7 @@
 \usepackage{appendixnumberbeamer}
 \usepackage{subcaption}
 
-\usetheme[numbering=fraction]{metropolis}
+\usetheme[numbering=fraction, block=fill]{metropolis}
 \setsansfont{Fira Sans}  % be sure to compile with XeLaTeX
 
 \usepackage{natbib}
@@ -459,13 +459,15 @@
 \end{frame}
 
 \begin{frame}{Semi-parametric network model}
-    Let $A \in \R^{n \times n}$ be a random symmetric matrix, such as the adjacency matrix of an undirected graph. Let $\Apop = \E[\X]{A} = \X \X^T$ be the expectation of $A$ conditional on $\X \in \R^{n \times d}$, which has independent and identically distributed rows $\X_{1 \cdot}, \dots, \X_{n \cdot}$. That is, $\Apop$ has $\rank \paren*{\Apop} = d$ and is positive semi-definite with eigenvalues $\lambda_1 \ge \lambda_2 \ge \cdots \ge \lambda_d > 0 = \lambda_{d+1} = \cdots = \lambda_n$. Conditional on $\X$, the upper-triangular elements of $A - \Apop$ are independent $(\nu_n, b_n)$-sub-gamma random variables.
-\end{frame}
 
+    \begin{definition}
+        Let $A \in \R^{n \times n}$ be a random symmetric matrix, such as the adjacency matrix of an undirected graph. Let $\Apop = \E[\X]{A} = \X \X^T$ be the expectation of $A$ conditional on $\X \in \R^{n \times d}$, which has independent and identically distributed rows $\X_{1 \cdot}, \dots, \X_{n \cdot}$. That is, $\Apop$ has $\rank \paren*{\Apop} = d$ and is positive semi-definite with eigenvalues $\lambda_1 \ge \lambda_2 \ge \cdots \ge \lambda_d > 0 = \lambda_{d+1} = \cdots = \lambda_n$. Conditional on $\X$, the upper-triangular elements of $A - \Apop$ are independent $(\nu_n, b_n)$-sub-gamma random variables.
+    \end{definition}
 
-\begin{frame}{Semi-parametric network model: identification of $\X$}
+    \begin{remark}
+        $\Apop = \X \X^T = (\X Q) (\X Q)^T$ for any $d \times d$ orthogonal matrix $Q$, the latent positions $\X$ are only identifiable up to an orthogonal transformation.
+    \end{remark}
 
-    $\Apop = \X \X^T = (\X Q) (\X Q)^T$ for any $d \times d$ orthogonal matrix $Q$, the latent positions $\X$ are only identifiable up to an orthogonal transformation.
 \end{frame}
 
 \begin{frame}{Choosing $\widehat{d}$: overestimating the embedding dimension is fine}
@@ -473,35 +475,37 @@
     \centering
 
     \begin{figure}
-        \includegraphics[width=0.7\textwidth]{figures/misspecification/loss_average.pdf}
+        \includegraphics[width=0.5\textwidth]{figures/misspecification/loss_average.pdf}
     \end{figure}
 
 \end{frame}
 
 \begin{frame}{Identifying assumptions}
 
-    The random variables $(Y_i, Y_i(t, x), \X_{i \cdot}, \X_{i \cdot}(t), C_{i \cdot}, T_i)$ are independent over $i \in [n]$ and obey the following three properties.
-    \begin{enumerate}
-        \item Consistency: \vspace{-3mm}
-              \begin{equation*} \begin{aligned}
-                       & \text{if $T_i = t$, then $\X_{i \cdot}(t) = \X_{i \cdot}$ with probability 1, and}    \\
-                       & \text{if $T_i = t$ and $\X_{i \cdot} = x$, then $Y_i(t, x) = Y_i$ with probability 1}
-                      \vspace{-2mm}
-                  \end{aligned} \end{equation*}
-        \item Sequential ignorability:
-              \begin{equation*}
-                  \set{Y_i(t^*, x), \X_{i \cdot}(t)} \indep T_i \cond \C_{i \cdot}
-                  ~~~\text{ and }~~~
-                  \set{Y_i(t^*, x)} \indep \X_{i \cdot}  \cond T_i = t, \C_{i \cdot}
-              \end{equation*}
-        \item Positivity:
-              \begin{equation*}
-                  \begin{aligned}
-                      \P[T_i, \C_{i \cdot}]{x} & > 0 \text{ for each }  x \in \supp(\X_{i \cdot}) \\
-                      \P[\C_{i \cdot}]{t}      & > 0 \text{ for each }  t \in \supp(T_i)
-                  \end{aligned}
-              \end{equation*}
-    \end{enumerate}
+    \begin{definition}
+        The random variables $(Y_i, Y_i(t, x), \X_{i \cdot}, \X_{i \cdot}(t), C_{i \cdot}, T_i)$ are independent over $i \in [n]$ and obey the following three properties.
+        \begin{enumerate}
+            \item Consistency: \vspace{-3mm}
+                  \begin{equation*} \begin{aligned}
+                           & \text{if $T_i = t$, then $\X_{i \cdot}(t) = \X_{i \cdot}$ with probability 1, and}    \\
+                           & \text{if $T_i = t$ and $\X_{i \cdot} = x$, then $Y_i(t, x) = Y_i$ with probability 1}
+                          \vspace{-2mm}
+                      \end{aligned} \end{equation*}
+            \item Sequential ignorability:
+                  \begin{equation*}
+                      \set{Y_i(t^*, x), \X_{i \cdot}(t)} \indep T_i \cond \C_{i \cdot}
+                      ~~~\text{ and }~~~
+                      \set{Y_i(t^*, x)} \indep \X_{i \cdot}  \cond T_i = t, \C_{i \cdot}
+                  \end{equation*}
+            \item Positivity:
+                  \begin{equation*}
+                      \begin{aligned}
+                          \P[T_i, \C_{i \cdot}]{x} & > 0 \text{ for each }  x \in \supp(\X_{i \cdot}) \\
+                          \P[\C_{i \cdot}]{t}      & > 0 \text{ for each }  t \in \supp(T_i)
+                      \end{aligned}
+                  \end{equation*}
+        \end{enumerate}
+    \end{definition}
 
 \end{frame}
 
