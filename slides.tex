@@ -1,10 +1,10 @@
-\documentclass{beamer} 
+\documentclass[aspectratio=169]{beamer} 
 
 \usepackage{hayesmacros}
 \usepackage{appendixnumberbeamer}
 \usepackage{subcaption}
 
-\usetheme{metropolis}
+\usetheme[numbering=fraction]{metropolis}
 \setsansfont{Fira Sans}  % be sure to compile with XeLaTeX
 
 \usepackage{natbib}
@@ -41,7 +41,7 @@
         \column{0.5 \textwidth}
 
         \begin{table}[]
-            \begin{tabular}{lcl}
+            \begin{tabular}{lrl}
                 Treatment   & $T_i$          & $\in \set{0, 1} $     \\
                 Outcome     & $Y_i$          & $\in \R$              \\
                 Mediators   & $\X_{i \cdot}$ & $\in \R^{1 \times d}$ \\
@@ -53,7 +53,7 @@
 
         \begin{figure}[ht]
             \centering
-            \includegraphics[width=0.9\textwidth]{figures/dags/mediating.png}
+            \includegraphics[width=0.7\textwidth]{figures/dags/mediating.png}
         \end{figure}
     \end{columns}
 
@@ -80,50 +80,73 @@
     \end{align*}
 \end{frame}
 
-\section{This talk: social networks as mediators}
+\section{Social networks as mediators}
 
-\begin{frame}{In particular: friends groups in social networks as mediators}
+\begin{frame}{Mediation in an adolescent social network}
 
-    \textbf{Motivating example:} friend groups mediate the effect of sex on smoking in an adolescent social network
+    \begin{columns}
 
-    \begin{itemize}
-        \item Girls smoke than boys
-        \item Girls and boys in different friend groups
-        \item Smoking varies with friend group
-    \end{itemize}
+        \column{0.5 \textwidth}
 
-\end{frame}
+        \begin{figure}[ht]
+            \raggedleft
+            \includegraphics[width=1.05\textwidth]{figures/glasgow/sex.png}
+        \end{figure}
 
-\begin{frame}{Teenage Friends and Lifestyle Study, Glasgow, 1996}
+        \column{0.5 \textwidth}
+
+        \begin{figure}[ht]
+            \raggedright
+            \includegraphics[width=1.05\textwidth]{figures/glasgow/tobacco.png}
+        \end{figure}
+    \end{columns}
+
     \centering
-    \includegraphics[width=\textwidth]{figures/glasgow/sex.png}
+    \scriptsize Teenage Friends and Lifestyle Study (wave 1), Glasgow, 1996
+
 \end{frame}
 
-\begin{frame}{Teenage Friends and Lifestyle Study, Glasgow, 1996}
+\begin{frame}{We propose a model where social groups in networks mediate causal effects}
+
+    \begin{columns}
+
+        \column{0.3 \textwidth}
+
+        \footnotesize
+
+        \begin{table}[]
+            \begin{tabular}{lcl}
+                Adjacency matrix & $A$            & $\in \R^{n \times n}$ \\
+                Edge $i \sim j$  & $A_{ij}$       & $\in \R$              \\
+                Treatment        & $T_i$          & $\in \set{0, 1}$      \\
+                Outcome          & $Y_i$          & $\in \R$              \\
+                Confounders      & $\C_{i \cdot}$ & $\in \R^{1 \times p}$ \\
+                Friend group     & $\X_{i \cdot}$ & $\in \R^{1 \times d}$
+            \end{tabular}
+        \end{table}
+
+        \column{0.7 \textwidth}
+
+        \begin{figure}[ht]
+            \centering
+            \includegraphics[width=\textwidth]{figures/dags/homophily-mediating.png}
+            \label{fig:mediating}
+        \end{figure}
+    \end{columns}
+
     \centering
-    \includegraphics[width=\textwidth]{figures/glasgow/tobacco.png}
-\end{frame}
+    \scriptsize Structural causal model for network mediation in a network with two nodes $i$ and $j$
 
-\begin{frame}{Mediation on a social network}
 
-    \begin{figure}[ht]
-        \centering
-        \includegraphics[width=0.8\textwidth]{figures/dags/homophily-mediating.png}
-        \label{fig:mediating}
-    \end{figure}
+    % \textbf{Motivating example:} friend groups mediate the effect of sex on smoking in an adolescent social network
 
-    \scriptsize
+    % \begin{itemize}
+    %     \item Girls smoke than boys
+    %     \item Girls and boys in different friend groups
+    %     \item Smoking varies with friend group
+    % \end{itemize}
 
-    \begin{table}[]
-        \begin{tabular}{lcl}
-            Adjacency matrix & $A$            & $\in \R^{n \times n}$ \\
-            Edge $i \sim j$  & $A_{ij}$       & $\in \R$              \\
-            Treatment        & $T_i$          & $\in \set{0, 1}$      \\
-            Outcome          & $Y_i$          & $\in \R$              \\
-            Confounders      & $\C_{i \cdot}$ & $\in \R^{1 \times p}$ \\
-            Friend group     & $\X_{i \cdot}$ & $\in \R^{1 \times d}$
-        \end{tabular}
-    \end{table}
+
 \end{frame}
 
 \begin{frame}{The challenge: the friend groups $\X_{i \cdot}$ are not observed!}
@@ -186,23 +209,28 @@
 
 \end{frame}
 
-\begin{frame}{Mediation estimators require $\X$, which is unknown}
-
-    We will estimate $X$ and plug our estimate into standard estimators!
+\begin{frame}{Don't know $\X$ but can estimate it!}
 
     \begin{definition}[ASE]
 
         Given a network $A$, the $\widehat{d}$-dimensional \emph{adjacency spectral embedding} of $A$ is
-
         \begin{align*}
             \Xhat = \Uhat \Shat^{1/2}
         \end{align*}
-
         \noindent where $\Uhat \Shat \Uhat^T$ is the rank-$\widehat{d}$ truncated singular value decomposition of $A$.
 
     \end{definition}
 
-    \textbf{Note that the analyst must specify $\widehat{d}$}
+    \begin{lemma}
+
+        Under a suitably well-behaved network model, if $\widehat{d}$ is correctly specified or consistently estimated, there is some $d \times d$ orthogonal matrix $Q$ such that
+        \begin{equation*}
+            \max_{i \in [n]} \, \norm*{\Xhat_{i \cdot} - \X_{i \cdot} Q} = \op{1}.
+        \end{equation*}
+
+    \end{lemma}
+
+    % \textbf{Note that the analyst must specify $\widehat{d}$}
 
 \end{frame}
 
@@ -210,14 +238,7 @@
 
 %     Well-known that $\Xhat$ is a good estimate of $\X$
 
-%     \begin{lemma}
-
-%         Under a suitably well-behaved network model, if $\widehat{d}$ is correctly specified or consistently estimated, there is some $d \times d$ orthogonal matrix $Q$ such that
-%         \begin{equation*}
-%             \max_{i \in [n]} \, \norm*{\Xhat_{i \cdot} - \X_{i \cdot} Q} = \op{1}.
-%         \end{equation*}
-
-%     \end{lemma}
+%     
 
 % \end{frame}
 
@@ -247,48 +268,46 @@
 
 \end{frame}
 
-\begin{frame}{A regression model for friend group membership}
+% \begin{frame}{A regression model for friend group membership}
 
-    \centering
+%     \centering
 
-    \begin{figure}
-        \includegraphics[scale=0.5]{figures/dags/homophily-mediating.png}
-    \end{figure}
-    Idea: interventions $T_i$ can cause community membership $\X_{i \cdot}$
-    \begin{align*}
-        \underbrace{\E[T_i, \C_{i \cdot}]{\X_{i \cdot}}}_{\R^{1 \times d}}
-         & = \underbrace{\thetazero}_{\R^{1 \times d}}
-        + \underbrace{T_i}_{\{0, 1\}} \underbrace{\thetat}_{\R^{1 \times d}}
-        + \underbrace{\C_{i \cdot}}_{\R^{1 \times p}} \underbrace{\Thetac}_{\R^{p \times d}}
-        + \underbrace{T_i}_{\{0, 1\}} \underbrace{\C_{i \cdot}}_{\R^{1 \times p}} \underbrace{\Thetatc}_{\R^{p \times d}}.
-    \end{align*}
+%     \begin{figure}
+%         \includegraphics[scale=0.5]{figures/dags/homophily-mediating.png}
+%     \end{figure}
+%     Idea: interventions $T_i$ can cause community membership $\X_{i \cdot}$
+%     \begin{align*}
+%         \underbrace{\E[T_i, \C_{i \cdot}]{\X_{i \cdot}}}_{\R^{1 \times d}}
+%          & = \underbrace{\thetazero}_{\R^{1 \times d}}
+%         + \underbrace{T_i}_{\{0, 1\}} \underbrace{\thetat}_{\R^{1 \times d}}
+%         + \underbrace{\C_{i \cdot}}_{\R^{1 \times p}} \underbrace{\Thetac}_{\R^{p \times d}}
+%         + \underbrace{T_i}_{\{0, 1\}} \underbrace{\C_{i \cdot}}_{\R^{1 \times p}} \underbrace{\Thetatc}_{\R^{p \times d}}.
+%     \end{align*}
 
-\end{frame}
+% \end{frame}
 
-\begin{frame}{A regression model for outcomes}
+% \begin{frame}{A regression model for outcomes}
 
-    \centering
+%     \centering
 
-    \begin{figure}
-        \includegraphics[scale=0.5]{figures/dags/homophily-mediating.png}
-    \end{figure}
+%     \begin{figure}
+%         \includegraphics[scale=0.5]{figures/dags/homophily-mediating.png}
+%     \end{figure}
 
-    Idea: community membership $\X_{i \cdot}$ can cause outcomes $Y_i$
-    \begin{align*}
-        \underbrace{\E[T_i, \C_{i \cdot}, \X_{i \cdot}]{Y_i}}_{\R}
-         & = \underbrace{\betazero}_{\R}
-        + \underbrace{T_i}_{\{0, 1\}} \underbrace{\betat}_{\R}
-        + \underbrace{\C_{i \cdot}}_{\R^{1 \times p}} \underbrace{\betac}_{\R^{p}}
-        + \underbrace{\X_{i \cdot}}_{\R^{1 \times d}} \underbrace{\betax}_{\R^d}
-    \end{align*}
+%     Idea: community membership $\X_{i \cdot}$ can cause outcomes $Y_i$
+%     \begin{align*}
+%         \underbrace{\E[T_i, \C_{i \cdot}, \X_{i \cdot}]{Y_i}}_{\R}
+%          & = \underbrace{\betazero}_{\R}
+%         + \underbrace{T_i}_{\{0, 1\}} \underbrace{\betat}_{\R}
+%         + \underbrace{\C_{i \cdot}}_{\R^{1 \times p}} \underbrace{\betac}_{\R^{p}}
+%         + \underbrace{\X_{i \cdot}}_{\R^{1 \times d}} \underbrace{\betax}_{\R^d}
+%     \end{align*}
 
-\end{frame}
+% \end{frame}
 
-\begin{frame}{$\Xhat$ can be plugged in for $\X$ just fine}
+\begin{frame}{Plug $\Xhat$ into regression estimator}
 
     Let $\Dhat = \begin{bmatrix} 1 & T & \C  & \Xhat \end{bmatrix} \in \R^{n \times (2 + p + d)}$ and $\Wfull = \begin{bmatrix} 1 & T & \C  & T \cdot \C \end{bmatrix} \in \R^{n \times (2 p + 2)}$.
-
-    We estimate $\betaw$ and $\betax$ via ordinary least squares as follows
     \begin{equation*}
         \begin{bmatrix}
             \betazerohat \\
@@ -296,24 +315,16 @@
             \betachat    \\
             \betaxhat
         \end{bmatrix}
-        = \paren*{\Dhat^T \Dhat}^{-1} \Dhat^T Y.
-    \end{equation*}
-    Similarly, we estimate $\Theta$ via ordinary least squares as
-    \begin{equation*}
+        = \paren*{\Dhat^T \Dhat}^{-1} \Dhat^T Y
+        \quad \text{and} \quad
         \Thetahat
         = \paren*{\Wfull^T \Wfull}^{-1} \Wfull^T \Xhat.
     \end{equation*}
-\end{frame}
 
-\begin{frame}{Causal estimators}
-
-    To estimate $\nde$ and $\nie$ in our semi-parametric setting, we combine regression coefficients from the network regression models:
     \begin{align*}
-        \cdehat & = \ndehat = \paren*{t - t^*} \, \betathat                                                                              & \text{and} \\
+        \ndehat & = \paren*{t - t^*} \, \betathat                                                                                        & \text{and} \\
         \niehat & = \paren*{t - t^*} \, \thetathat \, \betaxhat + \paren*{t - t^*} \cdot \widehat{\mu}_c \cdot \Thetatchat \, \betaxhat.
     \end{align*}
-    It's standard to fit two regressions and multiply coefficients to estimate an indirect effect like this \citep{vanderweele_mediation_2014}.
-
 \end{frame}
 
 \begin{frame}{Main result}
@@ -367,14 +378,32 @@
 
 \end{frame}
 
-% \section{Data example (if there is time)}
+\begin{frame}{Application to Glasgow data}
 
-% \begin{frame}{Glasgow data}
+    \begin{columns}
 
-%     TODO
+        \column{0.4 \textwidth}
 
-% \end{frame}
+        \footnotesize
 
+        \begin{itemize}
+            \item Estimated effects are adjusted for possible confounding by age and church attendance.
+            \item Estimated effects vary with the chosen dimension $d$ of the latent space
+            \item Over-specifying $d$ is typically okay, but under-specifying $d$ leads to a failure to capture social structure in $\X$
+            \item Once we capture enough social structure in $\X$, we see a significant indirect social effect that leads adolescent girls to smoke more
+        \end{itemize}
+
+        \column{0.6 \textwidth}
+
+        \begin{figure}[ht!]
+            \centering
+            \includegraphics[width=\textwidth]{figures/glasgow/effects.png}
+            \caption{Estimated direct and indirect effects of sex on tobacco usage in the Glasgow social network. Positive values indicate a greater propensity for adolescent boys to smoke, negative effects a greater propensity for adolescent girls to smoke.}
+            \label{fig:glasgow-estimates}
+        \end{figure}
+    \end{columns}
+
+\end{frame}
 
 \begin{frame}{Thank you! Questions?}
 
@@ -437,16 +466,6 @@
 \begin{frame}{Semi-parametric network model: identification of $\X$}
 
     $\Apop = \X \X^T = (\X Q) (\X Q)^T$ for any $d \times d$ orthogonal matrix $Q$, the latent positions $\X$ are only identifiable up to an orthogonal transformation.
-\end{frame}
-
-\begin{frame}{Choosing $\widehat{d}$: do a multiverse analysis}
-
-    \centering
-
-    \begin{figure}
-        \includegraphics[width=\textwidth]{figures/glasgow-effects.png}
-    \end{figure}
-
 \end{frame}
 
 \begin{frame}{Choosing $\widehat{d}$: overestimating the embedding dimension is fine}
@@ -534,8 +553,5 @@
     See Appendix of manuscript for details.
 
 \end{frame}
-
-\bibliographystyle{chicago}
-\bibliography{references}
 
 \end{document}
