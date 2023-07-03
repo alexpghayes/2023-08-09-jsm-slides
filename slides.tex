@@ -68,16 +68,30 @@
 
 \begin{frame}{Decomposing the average treatment effect}
 
-    $Y_i(t)$: counterfactual value of $Y_i$ when $T_i$ is set to $t$. The average treatment effect is
-    \begin{align*}
-        \ate = \E{Y_i(t) - Y_i(t^*)}
-    \end{align*}
-    which decomposes into the natural direct effect (not operating through $\X_{i \cdot}$) and natural indirect effect (operating through $\X_{i \cdot}$)
-    \begin{align*}
-        \ate & = \nde + \nie                                                    \\
-        \nde & = \E{Y_i (t, \X_{i \cdot}(t^*)) - Y_i (t^*, \X_{i \cdot} (t^*))} \\
-        \nie & = \E{Y_i (t, \X_{i \cdot}(t)) - Y_i (t, \X_{i \cdot} (t^*))}
-    \end{align*}
+    \begin{columns}
+
+        \column{0.5 \textwidth}
+
+        $Y_i(t)$: counterfactual value of $Y_i$ when $T_i$ is set to $t$. Average treatment effect:
+        \begin{align*}
+            \ate = \E{Y_i(t) - Y_i(t^*)}
+        \end{align*}
+        which decomposes into the natural direct effect and the natural indirect effect
+        \begin{align*}
+            \ate & = \nde + \nie                                                    \\
+            \nde & = \E{Y_i (t, \X_{i \cdot}(t^*)) - Y_i (t^*, \X_{i \cdot} (t^*))} \\
+            \nie & = \E{Y_i (t, \X_{i \cdot}(t)) - Y_i (t, \X_{i \cdot} (t^*))}
+        \end{align*}
+
+        \column{0.5 \textwidth}
+
+        \begin{figure}[ht]
+            \centering
+            \includegraphics[width=0.7\textwidth]{figures/dags/mediating.png}
+        \end{figure}
+    \end{columns}
+
+
 \end{frame}
 
 \section{Social networks as mediators}
@@ -110,22 +124,22 @@
 
     \begin{columns}
 
-        \column{0.3 \textwidth}
+        \column{0.35 \textwidth}
 
         \footnotesize
 
         \begin{table}[]
             \begin{tabular}{lcl}
-                Adjacency matrix & $A$            & $\in \R^{n \times n}$ \\
-                Edge $i \sim j$  & $A_{ij}$       & $\in \R$              \\
-                Treatment        & $T_i$          & $\in \set{0, 1}$      \\
-                Outcome          & $Y_i$          & $\in \R$              \\
-                Confounders      & $\C_{i \cdot}$ & $\in \R^{1 \times p}$ \\
-                Friend group     & $\X_{i \cdot}$ & $\in \R^{1 \times d}$
+                Adjacency matrix      & $A$            & $\in \R^{n \times n}$ \\
+                Edge $i \sim j$       & $A_{ij}$       & $\in \R$              \\
+                Treatment             & $T_i$          & $\in \set{0, 1}$      \\
+                Outcome               & $Y_i$          & $\in \R$              \\
+                Confounders           & $\C_{i \cdot}$ & $\in \R^{1 \times p}$ \\
+                Friend group (latent) & $\X_{i \cdot}$ & $\in \R^{1 \times d}$
             \end{tabular}
         \end{table}
 
-        \column{0.7 \textwidth}
+        \column{0.65 \textwidth}
 
         \begin{figure}[ht]
             \centering
@@ -177,7 +191,7 @@
 
         \column{0.55\textwidth}
 
-        $d$ ``blocks'' or communities
+        $d$ communities or ``blocks''
 
         $\X_{i \cdot} \in \set{0, 1}^d$ one-hot indicator of node $i$'s block
 
@@ -245,7 +259,7 @@
 
 \begin{frame}{Semi-parametric regression estimators}
 
-    Under the assumption that:
+    If the previous DAG is correct, under the additional assumption that:
     \begin{equation*}
         \begin{aligned}
             \underbrace{\E[T_i, \C_{i \cdot}, \X_{i \cdot}]{Y_i}}_{\R}
@@ -333,7 +347,7 @@
 
         \vspace{2mm}
 
-        Under some mild assumptions, there is an unknown orthogonal matrix $Q$ such that
+        Under a suitably well-behaved network model and some moments conditions on regression errors, there is an unknown orthogonal matrix $Q$ such that
         \begin{equation*}
             \begin{aligned}
                 \sqrt{ n } \,
@@ -398,7 +412,7 @@
         \begin{figure}[ht!]
             \centering
             \includegraphics[width=\textwidth]{figures/glasgow/effects.png}
-            \caption{Estimated direct and indirect effects of sex on tobacco usage in the Glasgow social network. Positive values indicate a greater propensity for adolescent boys to smoke, negative effects a greater propensity for adolescent girls to smoke.}
+            \caption{\footnotesize Estimated direct and indirect effects of sex on tobacco usage in the Glasgow social network. Positive values indicate a greater propensity for adolescent boys to smoke, negative effects a greater propensity for adolescent girls to smoke.}
             \label{fig:glasgow-estimates}
         \end{figure}
     \end{columns}
@@ -420,7 +434,7 @@
         \item[] \faIcon{github} \url{https://github.com/alexpghayes}
     \end{itemize}
 
-    \textbf{I'm looking for a post-doc, say hi if this work interests you!}
+    \textbf{I'm looking for a post-doc starting Fall 2024, say hi if this work interests you!}
 \end{frame}
 
 \appendix
