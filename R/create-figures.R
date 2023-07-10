@@ -58,7 +58,9 @@ make_mediating_figure <- function() {
     ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
     geom_dag_point(aes(color = status)) +
     scale_color_manual(values = status_colors, guide = "none") +
-    geom_dag_edges_diagonal() +
+    geom_dag_edges_diagonal(
+      arrow = grid::arrow(length = grid::unit(7, "pt"), type = "closed")
+    ) +
     geom_dag_text(aes(label = label), parse = TRUE, size = 5) +
     theme_dag(base_size = 22, base_family = "Computer Modern")
 
@@ -117,7 +119,9 @@ make_homophily_mediating_figure <- function() {
     ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
     geom_dag_point(aes(color = status)) +
     scale_color_manual(values = status_colors, guide = "none") +
-    geom_dag_edges_diagonal() +
+    geom_dag_edges_diagonal(
+      arrow = grid::arrow(length = grid::unit(7, "pt"), type = "closed")
+    ) +
     geom_dag_text(aes(label = label), parse = TRUE, size = 5) +
     theme_dag(base_size = 22, base_family = "Computer Modern")
 
@@ -176,7 +180,9 @@ make_homophily_confounding_figure <- function() {
     ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
     geom_dag_point(aes(color = status)) +
     scale_color_manual(values = status_colors, guide = "none") +
-    geom_dag_edges_diagonal() +
+    geom_dag_edges_diagonal(
+      arrow = grid::arrow(length = grid::unit(7, "pt"), type = "closed")
+    ) +
     geom_dag_text(aes(label = label), parse = TRUE, size = 5) +
     theme_dag(base_size = 22, base_family = "Computer Modern")
 
@@ -235,7 +241,9 @@ make_homophily_mediating_interference_peer_figure <- function() {
     ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
     geom_dag_point(aes(color = status)) +
     scale_color_manual(values = status_colors, guide = "none") +
-    geom_dag_edges_diagonal() +
+    geom_dag_edges_diagonal(
+      arrow = grid::arrow(length = grid::unit(7, "pt"), type = "closed")
+    ) +
     geom_dag_text(aes(label = label), parse = TRUE, size = 5) +
     theme_dag(base_size = 22, base_family = "Computer Modern")
 
@@ -294,7 +302,9 @@ make_homophily_mediating_interference_latent_figure <- function() {
     ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
     geom_dag_point(aes(color = status)) +
     scale_color_manual(values = status_colors, guide = "none") +
-    geom_dag_edges_diagonal() +
+    geom_dag_edges_diagonal(
+      arrow = grid::arrow(length = grid::unit(7, "pt"), type = "closed")
+    ) +
     geom_dag_text(aes(label = label), parse = TRUE, size = 5) +
     theme_dag(base_size = 22, base_family = "Computer Modern")
 
@@ -353,7 +363,9 @@ make_homophily_mediating_contagion_peer_figure <- function() {
     ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
     geom_dag_point(aes(color = status)) +
     scale_color_manual(values = status_colors, guide = "none") +
-    geom_dag_edges_diagonal() +
+    geom_dag_edges_diagonal(
+      arrow = grid::arrow(length = grid::unit(7, "pt"), type = "closed")
+    ) +
     geom_dag_text(aes(label = label), parse = TRUE, size = 5) +
     theme_dag(base_size = 22, base_family = "Computer Modern")
 
@@ -413,7 +425,9 @@ make_homophily_mediating_contagion_latent_figure <- function() {
     ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
     geom_dag_point(aes(color = status)) +
     scale_color_manual(values = status_colors, guide = "none") +
-    geom_dag_edges_diagonal() +
+    geom_dag_edges_diagonal(
+      arrow = grid::arrow(length = grid::unit(7, "pt"), type = "closed")
+    ) +
     geom_dag_text(aes(label = label), parse = TRUE, size = 5) +
     theme_dag(base_size = 22, base_family = "Computer Modern")
 

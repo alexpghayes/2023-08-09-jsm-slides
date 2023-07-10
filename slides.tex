@@ -49,50 +49,31 @@
             \end{tabular}
         \end{table}
 
-        \column{0.5 \textwidth}
+        Decompose effect of $T_i$ on $Y_i$:
 
+        \begin{enumerate}
+            \item Effect operating along $T_i \to Y_i$ path (direct)
+            \item Effect operating along $T_i \to \X_{i \cdot} \to Y_i$ path (indirect)
+        \end{enumerate}
+
+        \column{0.5 \textwidth}
+        \centering
         \begin{figure}[ht]
-            \centering
-            \includegraphics[width=0.7\textwidth]{figures/dags/mediating.png}
+            \includegraphics[width=.7\textwidth]{figures/dags/mediating.png}
         \end{figure}
-    \end{columns}
-
-    Decompose effect of $T_i$ on $Y_i$:
-
-    \begin{enumerate}
-        \item Effect operating along $T_i \to Y_i$ path (direct)
-        \item Effect operating along $T_i \to \X_{i \cdot} \to Y_i$ path (indirect)
-    \end{enumerate}
-
-\end{frame}
-
-\begin{frame}{Decomposing the average treatment effect}
-
-    \begin{columns}
-
-        \column{0.5 \textwidth}
-
-        $Y_i(t)$: counterfactual value of $Y_i$ when $T_i$ is set to $t$. Average treatment effect:
-        \begin{align*}
-            \ate = \E{Y_i(t) - Y_i(t^*)}
-        \end{align*}
-        which decomposes into the natural direct effect and the natural indirect effect
+        \vspace{-7mm}
         \begin{align*}
             \ate & = \nde + \nie                                                    \\
             \nde & = \E{Y_i (t, \X_{i \cdot}(t^*)) - Y_i (t^*, \X_{i \cdot} (t^*))} \\
             \nie & = \E{Y_i (t, \X_{i \cdot}(t)) - Y_i (t, \X_{i \cdot} (t^*))}
         \end{align*}
-
-        \column{0.5 \textwidth}
-
-        \begin{figure}[ht]
-            \centering
-            \includegraphics[width=0.7\textwidth]{figures/dags/mediating.png}
-        \end{figure}
     \end{columns}
 
 
+
+
 \end{frame}
+
 
 \section{Social networks as mediators}
 
@@ -104,14 +85,14 @@
 
         \begin{figure}[ht]
             \raggedleft
-            \includegraphics[width=1.05\textwidth]{figures/glasgow/sex.png}
+            \includegraphics[width=1.1\textwidth]{figures/glasgow/sex.png}
         \end{figure}
 
         \column{0.5 \textwidth}
 
         \begin{figure}[ht]
             \raggedright
-            \includegraphics[width=1.05\textwidth]{figures/glasgow/tobacco.png}
+            \includegraphics[width=1.1\textwidth]{figures/glasgow/tobacco.png}
         \end{figure}
     \end{columns}
 
@@ -232,29 +213,18 @@
             \Xhat = \Uhat \Shat^{1/2}
         \end{align*}
         \noindent where $\Uhat \Shat \Uhat^T$ is the rank-$\widehat{d}$ truncated singular value decomposition of $A$.
-
     \end{definition}
 
     \begin{lemma}
-
-        Under a suitably well-behaved network model, if $\widehat{d}$ is correctly specified or consistently estimated, there is some $d \times d$ orthogonal matrix $Q$ such that
+        Under a suitable network model, there is a $d \times d$ orthogonal matrix $Q$ such that
         \begin{equation*}
             \max_{i \in [n]} \, \norm*{\Xhat_{i \cdot} - \X_{i \cdot} Q} = \op{1}.
         \end{equation*}
-
     \end{lemma}
 
-    % \textbf{Note that the analyst must specify $\widehat{d}$}
-
+    \centering
+    \textbf{Note that we must specify $\widehat{d}$}
 \end{frame}
-
-% \begin{frame}{Uniform consistency of the adjacency spectral embedding}
-
-%     Well-known that $\Xhat$ is a good estimate of $\X$
-
-%     
-
-% \end{frame}
 
 
 \begin{frame}{Semi-parametric regression estimators}
@@ -394,29 +364,16 @@
 
 \begin{frame}{Application to Glasgow data}
 
-    \begin{columns}
+    % \item Estimated effects vary with the chosen dimension $d$ of the latent space
+    % \item Over-specifying $d$ is typically okay, but under-specifying $d$ leads to a failure to capture social structure in $\X$
+    % \item Once we capture enough social structure in $\X$, we see a significant indirect social effect that leads adolescent girls to smoke more
 
-        \column{0.4 \textwidth}
-
-        \footnotesize
-
-        \begin{itemize}
-            \item Estimated effects are adjusted for possible confounding by age and church attendance.
-            \item Estimated effects vary with the chosen dimension $d$ of the latent space
-            \item Over-specifying $d$ is typically okay, but under-specifying $d$ leads to a failure to capture social structure in $\X$
-            \item Once we capture enough social structure in $\X$, we see a significant indirect social effect that leads adolescent girls to smoke more
-        \end{itemize}
-
-        \column{0.6 \textwidth}
-
-        \begin{figure}[ht!]
-            \centering
-            \includegraphics[width=\textwidth]{figures/glasgow/effects.png}
-            \caption{\footnotesize Estimated direct and indirect effects of sex on tobacco usage in the Glasgow social network. Positive values indicate a greater propensity for adolescent boys to smoke, negative effects a greater propensity for adolescent girls to smoke.}
-            \label{fig:glasgow-estimates}
-        \end{figure}
-    \end{columns}
-
+    \begin{figure}
+        \centering
+        \includegraphics[width=.7\textwidth]{figures/glasgow/effects.png}
+        \caption{\footnotesize Estimated direct and indirect effects of sex on tobacco usage in the Glasgow social network, adjusted for age and church attendance. Positive values indicate a greater propensity for adolescent boys to smoke, negative effects a greater propensity for adolescent girls to smoke.}
+        \label{fig:glasgow-estimates}
+    \end{figure}
 \end{frame}
 
 \begin{frame}{Thank you! Questions?}
