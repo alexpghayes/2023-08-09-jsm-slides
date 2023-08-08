@@ -208,11 +208,11 @@
 
     \begin{definition}[ASE]
 
-        Given a network $A$, the $\widehat{d}$-dimensional \emph{adjacency spectral embedding} of $A$ is
+        Given a network $A$, the $d$-dimensional \emph{adjacency spectral embedding} of $A$ is
         \begin{align*}
             \Xhat = \Uhat \Shat^{1/2}
         \end{align*}
-        \noindent where $\Uhat \Shat \Uhat^T$ is the rank-$\widehat{d}$ truncated singular value decomposition of $A$.
+        \noindent where $\Uhat \Shat \Uhat^T$ is the rank-$d$ truncated singular value decomposition of $A$.
     \end{definition}
 
     \begin{lemma}
@@ -224,12 +224,11 @@
 
     \centering
 
-    % TODO: $d$ vs $\widehat{d}$
-    \textbf{Note that we must specify $\widehat{d}$}
+    \textbf{Note that we must correctly specify $d$}
 \end{frame}
 
 
-\begin{frame}{Semi-parametric regression estimators}
+\begin{frame}{Semi-parametric regression models for mediation}
 
     If the previous DAG is correct, under the additional assumption that:
     \begin{equation*}
@@ -254,44 +253,7 @@
 
 \end{frame}
 
-% \begin{frame}{A regression model for friend group membership}
-
-%     \centering
-
-%     \begin{figure}
-%         \includegraphics[scale=0.5]{figures/dags/homophily-mediating.png}
-%     \end{figure}
-%     Idea: interventions $T_i$ can cause community membership $\X_{i \cdot}$
-%     \begin{align*}
-%         \underbrace{\E[T_i, \C_{i \cdot}]{\X_{i \cdot}}}_{\R^{1 \times d}}
-%          & = \underbrace{\thetazero}_{\R^{1 \times d}}
-%         + \underbrace{T_i}_{\{0, 1\}} \underbrace{\thetat}_{\R^{1 \times d}}
-%         + \underbrace{\C_{i \cdot}}_{\R^{1 \times p}} \underbrace{\Thetac}_{\R^{p \times d}}
-%         + \underbrace{T_i}_{\{0, 1\}} \underbrace{\C_{i \cdot}}_{\R^{1 \times p}} \underbrace{\Thetatc}_{\R^{p \times d}}.
-%     \end{align*}
-
-% \end{frame}
-
-% \begin{frame}{A regression model for outcomes}
-
-%     \centering
-
-%     \begin{figure}
-%         \includegraphics[scale=0.5]{figures/dags/homophily-mediating.png}
-%     \end{figure}
-
-%     Idea: community membership $\X_{i \cdot}$ can cause outcomes $Y_i$
-%     \begin{align*}
-%         \underbrace{\E[T_i, \C_{i \cdot}, \X_{i \cdot}]{Y_i}}_{\R}
-%          & = \underbrace{\betazero}_{\R}
-%         + \underbrace{T_i}_{\{0, 1\}} \underbrace{\betat}_{\R}
-%         + \underbrace{\C_{i \cdot}}_{\R^{1 \times p}} \underbrace{\betac}_{\R^{p}}
-%         + \underbrace{\X_{i \cdot}}_{\R^{1 \times d}} \underbrace{\betax}_{\R^d}
-%     \end{align*}
-
-% \end{frame}
-
-\begin{frame}{Plug $\Xhat$ into regression estimator}
+\begin{frame}{Estimation: plug $\Xhat$ into least squares}
 
     Let $\Dhat = \begin{bmatrix} 1 & T & \C  & \Xhat \end{bmatrix} \in \R^{n \times (2 + p + d)}$ and $\Wfull = \begin{bmatrix} 1 & T & \C  & T \cdot \C \end{bmatrix} \in \R^{n \times (2 p + 2)}$.
     \begin{equation*}
